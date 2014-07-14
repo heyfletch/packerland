@@ -11,7 +11,7 @@ $ulp_options = get_option('ulp_options');
 <html>
 <head>
 <title><?php echo stripslashes($ulp_options['title']) ?></title>
-<!-- Version: 1.1.27 -->
+<!-- Version: 1.1.28 -->
 <!-- <link rel="stylesheet" href="<?php echo plugins_url('template/style.css',dirname(__FILE__)); ?>"> -->
 <link href='http://fonts.googleapis.com/css?family=<?php echo str_replace(" ", "+", $ulp_options['headline_font'])."|".str_replace(" ", "+", $ulp_options['description_font']) ?>' rel='stylesheet' type='text/css'>
 

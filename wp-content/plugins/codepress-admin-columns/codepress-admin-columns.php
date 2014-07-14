@@ -2,7 +2,7 @@
 /*
 
 Plugin Name: 		Codepress Admin Columns
-Version: 			2.2
+Version: 			2.2.4
 Description: 		Customize columns on the administration screens for post(types), pages, media, comments, links and users with an easy to use drag-and-drop interface.
 Author: 			Codepress
 Author URI: 		http://www.codepresshq.com
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) )  {
 }
 
 // Plugin information
-define( 'CPAC_VERSION', 	 	'2.2' ); // current plugin version
+define( 'CPAC_VERSION', 	 	'2.2.4' ); // current plugin version
 define( 'CPAC_UPGRADE_VERSION', '2.0.0' ); // this is the latest version which requires an upgrade
 define( 'CPAC_URL', 			plugin_dir_url( __FILE__ ) );
 define( 'CPAC_DIR', 			plugin_dir_path( __FILE__ ) );
@@ -55,7 +55,7 @@ require_once CPAC_DIR . 'api.php';
 /**
  * The Codepress Admin Columns Class
  *
- * @since 1.0.0
+ * @since 1.0
  */
 class CPAC {
 
@@ -87,7 +87,7 @@ class CPAC {
 	private $_settings;
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	function __construct() {
 
@@ -105,8 +105,8 @@ class CPAC {
 		// Add settings link
 		add_filter( 'plugin_action_links',  array( $this, 'add_settings_link' ), 1, 2 );
 
-		// Load scripts
-		$this->init_scripts();
+		// Scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
 
 		// Settings
 		include_once CPAC_DIR . 'classes/settings.php';
@@ -132,7 +132,7 @@ class CPAC {
 		 * Fires when Admin Columns is fully loaded
 		 * Use this for setting up addon functionality
 		 *
-		 * @since 2.0.0
+		 * @since 2.0
 		 * @param CPAC $cpac_instance Main Admin Columns plugin class instance
 		 */
 		do_action( 'cac/loaded', $this );
@@ -228,16 +228,31 @@ class CPAC {
 	}
 
 	/**
-	 * @since 2.1.1
+	 * @since 2.2.4
 	 */
-	public function init_scripts() {
+	public function scripts() {
 
 		add_action( 'admin_head', array( $this, 'global_head_scripts') );
 
+		wp_register_script( 'cpac-admin-columns', CPAC_URL . 'assets/js/admin-columns.js', array( 'jquery', 'jquery-qtip2' ), CPAC_VERSION );
+
 		if ( $this->is_columns_screen() ) {
-			add_action( 'admin_enqueue_scripts' , array( $this, 'column_styles') );
 			add_filter( 'admin_body_class', array( $this, 'admin_class' ) );
 			add_action( 'admin_head', array( $this, 'admin_scripts') );
+
+			wp_enqueue_script( 'cpac-admin-columns' );
+
+			$data = array();
+
+			if ( $storage_model = $this->get_current_storage_model() ) {
+				$data['storage_model'] = array(
+					'is_table_header_fixed' => $storage_model->is_table_header_fixed()
+				);
+			}
+
+			wp_localize_script( 'cpac-admin-columns', 'CPAC', $data );
+
+			$this->column_styles();
 		}
 	}
 
@@ -254,7 +269,7 @@ class CPAC {
 	}
 
 	/**
-	 * @since 2.0.0
+	 * @since 2.0
 	 */
 	public function set_storage_models() {
 
@@ -265,6 +280,7 @@ class CPAC {
 
 		// include parent and childs
 		require_once CPAC_DIR . 'classes/column.php';
+		require_once CPAC_DIR . 'classes/column/default.php';
 		require_once CPAC_DIR . 'classes/storage_model.php';
 		require_once CPAC_DIR . 'classes/storage_model/post.php';
 		require_once CPAC_DIR . 'classes/storage_model/user.php';
@@ -295,14 +311,14 @@ class CPAC {
 		 * Filter the available storage models
 		 * Used by external plugins to add additional storage models
 		 *
-		 * @since 2.0.0
+		 * @since 2.0
 		 * @param array $storage_models List of storage model class instances ( [key] => [CPAC_Storage_Model object], where [key] is the storage key, such as "user", "post" or "my_custom_post_type")
 		 */
 		$this->storage_models = apply_filters( 'cac/storage_models', $storage_models );
 	}
 
 	/**
-	 * @since 2.0.0
+	 * @since 2.0
 	 * @return array|false object Storage Model
 	 */
 	public function get_storage_model( $key ) {
@@ -315,7 +331,21 @@ class CPAC {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 2.2.4
+	 */
+	public function get_current_storage_model() {
+
+		if ( $this->storage_models ) {
+			foreach ( $this->storage_models as $storage_model ) {
+				if ( $storage_model->is_columns_screen() ) {
+					return $storage_model;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @since 1.0
 	 * @return array Posttypes
 	 */
 	public function get_post_types() {
@@ -336,14 +366,14 @@ class CPAC {
 		/**
 		 * Filter the post types for which Admin Columns is active
 		 *
-		 * @since 2.0.0
+		 * @since 2.0
 		 * @param array $post_types List of active post type names
 		 */
 		return apply_filters( 'cac/post_types', $post_types );
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	function add_settings_link( $links, $file ) {
 
@@ -356,10 +386,17 @@ class CPAC {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function column_styles() {
-		wp_enqueue_style( 'cpac-columns', CPAC_URL . 'assets/css/column.css', array(), CPAC_VERSION, 'all' );
+
+		wp_register_script( 'jquery-qtip2', CPAC_URL . 'external/qtip2/jquery.qtip.min.js', array( 'jquery' ), CPAC_VERSION );
+		wp_register_style( 'jquery-qtip2', CPAC_URL . 'external/qtip2/jquery.qtip.min.css', array(), CPAC_VERSION, 'all' );
+		wp_register_style( 'cpac-columns', CPAC_URL . 'assets/css/column.css', array(), CPAC_VERSION, 'all' );
+
+		wp_enqueue_script( 'jquery-qtip2' );
+		wp_enqueue_style( 'jquery-qtip2' );
+		wp_enqueue_style( 'cpac-columns' );
 	}
 
 	/**
@@ -470,7 +507,7 @@ class CPAC {
 /**
  * Init Class Codepress_Admin_Columns ( sets Global for backwards compatibility. )
  *
- * @since 1.0.0
+ * @since 1.0
  */
 $GLOBALS['cpac'] = new CPAC();
 

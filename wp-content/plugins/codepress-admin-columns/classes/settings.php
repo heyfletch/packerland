@@ -3,19 +3,19 @@
 /**
  * CPAC_Settings Class
  *
- * @since 2.0.0
+ * @since 2.0
  */
 class CPAC_Settings {
 
 	/**
 	 * CPAC class
 	 *
-	 * @since 2.0.0
+	 * @since 2.0
 	 */
 	private $cpac;
 
 	/**
-	 * @since 2.0.0
+	 * @since 2.0
 	 * @param object CPAC
 	 */
 	function __construct( $cpac ) {
@@ -36,7 +36,7 @@ class CPAC_Settings {
 	/**
 	 * Get available Admin Columns admin page URLs
 	 *
-	 * @since 2.3
+	 * @since 2.2
 	 * @return array Available settings URLs ([settings_page] => [url])
 	 */
 	public function get_settings_urls() {
@@ -44,7 +44,7 @@ class CPAC_Settings {
 		/**
 		 * Filter the URLs for the different settings screens available in admin columns
 		 *
-		 * @since 2.3
+		 * @since 2.2
 		 *
 		 * @param array $settings_urls Available settings URLs ([settings_page] => [url])
 		 * @param CPAC_Settings $settings_instance Settings class instance
@@ -61,7 +61,7 @@ class CPAC_Settings {
 	/**
 	 * Get the settings URL for a page
 	 *
-	 * @since 2.3
+	 * @since 2.2
 	 * @param string $page Optional. Admin page to get the URL from. Defaults to the basic Admin Columns page
 	 * @return string Settings page URL
 	 */
@@ -147,7 +147,7 @@ class CPAC_Settings {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function settings_menu() {
 
@@ -171,14 +171,14 @@ class CPAC_Settings {
 	/**
 	 * Allows the capaiblity 'manage_admin_columns' to store data through /wp-admin/options.php
 	 *
-	 * @since 2.0.0
+	 * @since 2.0
 	 */
 	public function add_capability() {
 		return 'manage_admin_columns';
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function admin_styles() {
 		wp_enqueue_style( 'wp-pointer' );
@@ -187,7 +187,7 @@ class CPAC_Settings {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function admin_scripts() {
 
@@ -196,16 +196,16 @@ class CPAC_Settings {
 
 		$minified = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'cpac-admin-columns', CPAC_URL . "assets/js/admin-columns{$minified}.js", array( 'jquery', 'dashboard', 'jquery-ui-slider', 'jquery-ui-sortable' ), CPAC_VERSION );
+		wp_enqueue_script( 'cpac-admin-settings', CPAC_URL . "assets/js/admin-settings{$minified}.js", array( 'jquery', 'dashboard', 'jquery-ui-slider', 'jquery-ui-sortable' ), CPAC_VERSION );
 
 		// javascript translations
-		wp_localize_script( 'cpac-admin-columns', 'cpac_i18n', array(
+		wp_localize_script( 'cpac-admin-settings', 'cpac_i18n', array(
 			'clone'	=> __( '%s column is already present and can not be duplicated.', 'cpac' ),
 		));
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function handle_column_request() {
 
@@ -246,7 +246,7 @@ class CPAC_Settings {
 	/**
 	 * Restore all column defaults
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	private function restore_all() {
 		global $wpdb;
@@ -318,7 +318,7 @@ class CPAC_Settings {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 * @param string $storage_model URL type.
 	 * @return string Url.
 	 */
@@ -345,7 +345,7 @@ class CPAC_Settings {
 	}
 
 	/**
-	 * @since 2.0.0
+	 * @since 2.0
 	 */
 	public function uses_custom_fields() {
 
@@ -366,7 +366,7 @@ class CPAC_Settings {
 	/**
 	 * Welcome screen
 	 *
-	 * @since 2.0.0
+	 * @since 2.0
 	 */
 	public function welcome_screen() {
 
@@ -510,7 +510,7 @@ class CPAC_Settings {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function display_settings() {
 	?>
@@ -609,7 +609,7 @@ class CPAC_Settings {
 	}
 
 	/**
-	 * @since 1.0.0
+	 * @since 1.0
 	 */
 	public function display() {
 
@@ -695,24 +695,29 @@ class CPAC_Settings {
 									<?php endif; ?>
 
 									<?php if ( ! class_exists( 'CAC_Addon_Pro' ) ) : ?>
+									<?php $url_args = array(
+										'utm_source' => 'plugin-installation',
+										'utm_medium' => 'banner',
+										'utm_campaign' => 'plugin-installation'
+									); ?>
 									<div class="sidebox" id="pro-version">
 										<div class="padding-box cta">
 											<h3>
-												<a href="<?php echo $this->get_url('admincolumnspro'); ?>"><?php _e( 'Get Admin Columns Pro', 'cpac' ) ?></a>
+												<a href="<?php echo add_query_arg( array_merge( $url_args, array( 'utm_content' => 'title' ) ), $this->get_url( 'admincolumnspro' ) ); ?>"><?php _e( 'Get Admin Columns Pro', 'cpac' ) ?></a>
 											</h3>
 											<div class="inside">
 												<ul>
-													<li><a href="<?php echo $this->get_url( 'admincolumnspro' ); ?>"><?php _e( 'Add Sorting', 'cpac' ); ?></a></li>
-													<li><a href="<?php echo $this->get_url( 'admincolumnspro' ); ?>"><?php _e( 'Add Filtering', 'cpac' ); ?></a></li>
-													<li><a href="<?php echo $this->get_url( 'admincolumnspro' ); ?>"><?php _e( 'Add Import/Export', 'cpac' ); ?></a></li>
-													<li><a href="<?php echo $this->get_url( 'admincolumnspro' ); ?>"><?php _e( 'Add Direct Editing', 'cpac' ); ?></a></li>
+													<li><a href="<?php echo add_query_arg( array_merge( $url_args, array( 'utm_content' => 'usp-sorting' ) ), $this->get_url( 'admincolumnspro' ) ) ?>"><?php _e( 'Add Sorting', 'cpac' ); ?></a></li>
+													<li><a href="<?php echo add_query_arg( array_merge( $url_args, array( 'utm_content' => 'usp-filtering' ) ), $this->get_url( 'admincolumnspro' ) ) ?>"><?php _e( 'Add Filtering', 'cpac' ); ?></a></li>
+													<li><a href="<?php echo add_query_arg( array_merge( $url_args, array( 'utm_content' => 'usp-import-export' ) ), $this->get_url( 'admincolumnspro' ) ) ?>"><?php _e( 'Add Import/Export', 'cpac' ); ?></a></li>
+													<li><a href="<?php echo add_query_arg( array_merge( $url_args, array( 'utm_content' => 'usp-editing' ) ), $this->get_url( 'admincolumnspro' ) ) ?>"><?php _e( 'Add Direct Editing', 'cpac' ); ?></a></li>
 												</ul>
 												<p>
-													<?php printf( __( 'Check out <a href="%s">Admin Columns Pro</a> for more details!', 'cpac' ), $this->get_url('admincolumnspro') ); ?>
+													<?php printf( __( 'Check out <a href="%s">Admin Columns Pro</a> for more details!', 'cpac' ), add_query_arg( array_merge( $url_args, array( 'utm_content' => 'cta' ) ), $this->get_url( 'admincolumnspro' ) ) ); ?>
 												</p>
 											</div>
 										</div>
-
+									</div>
 
 										<?php
 										// @todo: add newsletter
@@ -735,7 +740,76 @@ class CPAC_Settings {
 											</form>
 										</div>
 										<?php */ ?>
-									</div><!--pro-version-->
+
+
+									<div class="sidebox" id="direct-feedback">
+										<div id="feedback-choice">
+											<h3><?php _e( 'Are you happy with Admin Columns?', 'cpac' ); ?></h3>
+											<div class="inside">
+												<a href="#" class="yes">Yes</a>
+												<a href="#" class="no">No</a>
+											</div>
+										</div>
+										<div id="feedback-support">
+											<div class="inside">
+												<p><?php _e( "What's wrong? Need help? Let us know!", 'cpac' ); ?></p>
+												<p><?php _e( 'Check out our extensive documentation, or you can open a support topic on WordPress.org!', 'cpac' ); ?></p>
+												<ul class="share">
+													<li>
+														<a href="<?php echo add_query_arg( array(
+															'utm_source' => 'plugin-installation',
+															'utm_medium' => 'feedback-docs-button',
+															'utm_campaign' => 'plugin-installation'
+														), $this->get_url( 'documentation' ) ); ?>" target="_blank">
+															<div class="dashicons dashicons-editor-help"></div> <?php _e( 'Docs', 'cpac' ); ?>
+														</a>
+													</li>
+													<li>
+														<a href="https://wordpress.org/support/plugin/codepress-admin-columns" target="_blank">
+															<div class="dashicons dashicons-wordpress"></div> <?php _e( 'Forums', 'cpac' ); ?>
+														</a>
+													</li>
+												</ul>
+												<div class="clear"></div>
+											</div>
+										</div>
+										<div id="feedback-rate">
+											<div class="inside">
+												<p><?php _e( "Woohoo! We're glad to hear that!", 'cpac' ); ?></p>
+												<p><?php _e( 'We would really love it if you could show your appreciation by giving us a rating on WordPress.org or tweet about Admin Columns!', 'cpac' ); ?></p>
+												<ul class="share">
+													<li>
+														<a href="http://wordpress.org/support/view/plugin-reviews/codepress-admin-columns#postform" target="_blank">
+															<div class="dashicons dashicons-star-empty"></div> <?php _e( 'Rate', 'cpac' ); ?>
+														</a>
+													</li>
+
+													<li>
+														<a href="<?php echo add_query_arg( array(
+															'hashtags' => 'wordpress',
+															'text' => urlencode( "I'm using Admin Columns for WordPress!" ),
+															'url' => urlencode( 'http://wordpress.org/plugins/codepress-admin-columns/' ),
+															'via' => 'wpcolumns'
+														), 'https://twitter.com/intent/tweet' ); ?>" target="_blank">
+															<div class="dashicons dashicons-twitter"></div> <?php _e( 'Tweet', 'cpac' ); ?>
+														</a>
+													</li>
+
+													<li>
+														<a href="<?php echo add_query_arg( array(
+															'utm_source' => 'plugin-installation',
+															'utm_medium' => 'feedback-purchase-button',
+															'utm_campaign' => 'plugin-installation'
+														), $this->get_url( 'admincolumnspro' ) ); ?>" target="_blank">
+															<div class="dashicons dashicons-cart"></div> <?php _e( 'Buy Pro', 'cpac' ); ?>
+														</a>
+													</li>
+												</ul>
+												<div class="clear"></div>
+											</div>
+										</div>
+									</div>
+
 									<?php endif; ?>
 
 									<div class="sidebox" id="plugin-support">
