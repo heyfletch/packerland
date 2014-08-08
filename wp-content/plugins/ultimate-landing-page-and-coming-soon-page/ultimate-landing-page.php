@@ -3,7 +3,7 @@
 Plugin Name: Ultimate Landing Page and Coming Soon Page
 Plugin URI: http://www.thinklandingpages.com
 Description: Create a landing page, coming soon page, or maintenance page and collect emails.
-Version: 1.1.28
+Version: 1.1.29
 Author: Jeff Bullins
 Author URI: http://www.thinklandingpages.com
 */
@@ -168,7 +168,7 @@ function ulp_render_form() {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div id="side-info-column" class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<a target="_blank" href="http://www.thinklandingpages.com/landingpage/wordpress-landing-page-plugin-2-2/?utm_source=inside%20landing%20page%20plugin%20banner&utm_medium=plugin&utm_campaign=inside%20landing%20page%20plugin%20banner">
+				<a target="_blank" href="http://www.thinklandingpages.com/landingpage/ultimate-landing-page-advanced-features/?utm_source=inside%20landing%20page%20plugin%20banner-to-feature-page&utm_medium=plugin&utm_campaign=inside%20landing%20page%20plugin%20banner-to-feature-page">
 <img src="<?php echo plugins_url( 'upgrade.png' , __FILE__ ) ?>">
 </a>
 <br>
@@ -351,7 +351,7 @@ function ulp_render_form() {
 					<td>
 						<?php
 							$args = array("textarea_name" => "ulp_options[description]");
-							wp_editor( $options['description'], "ulp_options[description]", $args );
+							wp_editor( $options['description'], "ulp_options_description", $args );
 						?>
 						<br /><span style="color:#666666;margin-left:2px;"></span>
 					</td>
@@ -399,8 +399,8 @@ function ulp_render_form() {
 							<option disabled='disabled' value='mailchimp' <?php selected('mailchimp', $options['drp_select_box']); ?>>Mailchimp</option>
 							
 						</select>
-						<span style="color:#666666;margin-left:2px;">Aweber, MailChimp, Constant Contact, GetResponse, and other email list management software are supported in Ultimate Landing Page Advanced</span></br>
-						<span style="color:#666666;margin-left:2px;"><a href="http://www.thinklandingpages.com/landingpage/wordpress-landing-page-plugin-2-2/?utm_source=inside%20landing%20page%20plugin%20inline&utm_medium=plugin&utm_campaign=inside%20landing%20page%20plugin%20inline">Free Upgrade Now to the Advanced Lite Version</a></span>
+						<span style="color:#666666;margin-left:2px;">Aweber, MailChimp, Constant Contact, GetResponse, and other email list management software are supported in Ultimate Landing Page Advanced and Pro Versions</span></br>
+						<span style="color:#666666;margin-left:2px;"><a href="http://www.thinklandingpages.com/landingpage/ultimate-landing-page-advanced-features/?utm_source=inside%20landing%20page%20plugin%20inline-to-feature-page&utm_medium=plugin&utm_campaign=inside%20landing%20page%20plugin%20inline-to-feature-page">Upgrade Now to the Advanced or Pro Version</a></span>
 					</td>
 				</tr>
 
