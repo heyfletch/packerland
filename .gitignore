@@ -16,6 +16,8 @@ _notes
 #Theme Specific
 wp-content/themes/merchantguru/node_modules
 wp-content/themes/merchantguru/.sass-cache
+node_modules/
+.sass-cache/
 #wp-content/themes/merchantguru/assets/css/main.min.css.map
 
 #Local Specific
