@@ -4,6 +4,8 @@ Include the Foundation settings
 
 @import "_settings";
 
+/* Custom settings overrides */
+
 /*=================================================================  
   
     Import Foundation Components
@@ -34,6 +36,14 @@ Import Roots Components - Do your SASS awesomeness here! Goodspeed young travele
 @import "layouts/_posts";            // Post styling
 
 
+
+/* Custom here? */
+.top-bar a {
+	font-family: $secondary-font-family;
+}
+
+
+
 /*==========  Foundation Media Queries - copy/paste from here if needed  ==========*/
 
 @media #{$small-up} { }
@@ -50,3 +60,5 @@ Import Roots Components - Do your SASS awesomeness here! Goodspeed young travele
 
 @media #{$xxlarge-up} { }
 @media #{$xxlarge-only} { }
+
+
