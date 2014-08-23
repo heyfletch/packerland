@@ -48,6 +48,7 @@ var jshint = require("gulp-jshint");					// jshint
 		gulp.src([
 			'bower_components/jquery/dist/jquery.min.js',			// Gets Jquery
 			'bower_components/fastclick/lib/fastclick.js',			// Gets fastclick
+			'bower_components/velocity/jquery.velocity.js',			// Gets Velocity
 
 			// Gets Foundation JS change to only include the scripts you'll need
 			'bower_components/foundation/js/foundation/foundation.js',
