@@ -16,7 +16,6 @@ Include the Foundation settings
 @import "_foundation";
 
 
-
 /*=================================================================
 Import Roots Components - Do your SASS awesomeness here! Goodspeed young traveler :)
 =================================================================*/
@@ -36,12 +35,8 @@ Import Roots Components - Do your SASS awesomeness here! Goodspeed young travele
 @import "layouts/_posts";            // Post styling
 
 
-
-/* Custom here? */
-.top-bar a {
-	font-family: $secondary-font-family;
-}
-
+/* Custom styling here */
+@import "_custom";
 
 
 /*==========  Foundation Media Queries - copy/paste from here if needed  ==========*/
