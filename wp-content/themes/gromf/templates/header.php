@@ -1,5 +1,5 @@
 <div class="contain-to-grid">
-  <header>
+  <header class="sticky">
     <nav class="top-bar" data-topbar>
       <ul class="title-area">
         <li class="name">

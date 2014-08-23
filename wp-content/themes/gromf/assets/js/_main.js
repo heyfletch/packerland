@@ -26,10 +26,11 @@ var Roots = {
       // JavaScript to be fired on all pages
       $(document).foundation(); // Initialize foundation JS for all pages
 
+
       // Animate logo
       $('.letter').velocity({ 
           // properties
-          scale: 1.03,
+          scale: 1.02,
           opacity: .7,
         }, {
           /* Velocity's default options */
@@ -40,11 +41,12 @@ var Roots = {
       $('.letter').velocity("reverse", { delay: 100, duration: 300 });
 
       $('#dot').velocity({
-        scale: 1.01,
-            strokeRed: 255,
-          strokeGreen: 191,
-          strokeBlue: 0,
-        }, {
+        scale: 1.007,
+        strokeRed: 255,
+        strokeGreen: 191,
+        strokeBlue: 0,
+      }, 
+      {
         delay: 300
       });
 
