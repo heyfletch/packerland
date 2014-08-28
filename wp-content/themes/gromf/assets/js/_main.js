@@ -30,10 +30,10 @@ var Roots = {
       // Animate logo
       $('.letter').velocity({ 
           // properties
-          scale: 1.02,
-          opacity: .7,
+          scale: 1.007,
+          opacity: 0.7,
         }, {
-          /* Velocity's default options */
+          // options
           delay: 1000,
           easing: "ease-in-out", // Default easing
        });
@@ -41,10 +41,11 @@ var Roots = {
       $('.letter').velocity("reverse", { delay: 100, duration: 300 });
 
       $('#dot').velocity({
-        scale: 1.007,
-        strokeRed: 255,
-        strokeGreen: 191,
-        strokeBlue: 0,
+        scale: 1.004,
+        opacity: 0.9,        
+        // strokeRed: 0,
+        // strokeGreen: 0,
+        // strokeBlue: 0,
       }, 
       {
         delay: 300

@@ -36,6 +36,6 @@
         l0.5-3.9h9.6v31.2c0,0.7,0,0.8,0.8,0.9l2.3,0.3v3.8H258.9z M257.6,23.9c-1.2-0.8-2.7-1.4-4.1-1.4c-3.6,0-4.9,3.3-4.9,7.6
         c0,4.7,1.3,7.2,4.4,7.2c1.6,0,3.4-1,4.7-2.1V23.9z"/>
     </g>
-    <circle id="dot" class="letter" fill="#2A433B" stroke="#FCBE15" stroke-width="2" stroke-miterlimit="10" cx="161" cy="39" r="4"/>
+    <circle id="dot" class="letter" fill="#FCBE15" stroke="#FCBE15" stroke-width="2" stroke-miterlimit="10" cx="161" cy="39" r="4"/>
   </g>
 </svg>

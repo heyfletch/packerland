@@ -19,8 +19,10 @@
   get_template_part('templates/header');
 ?>
 
-
-
+  <?php if (is_front_page()) {
+      get_template_part('templates/banner');
+    }
+  ?>
 
   <div class="content row" role="document">
     <main class="main <?php echo roots_main_class(); ?> columns" role="main">
