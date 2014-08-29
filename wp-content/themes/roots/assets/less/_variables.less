@@ -1,17 +1,32 @@
 // Grid settings
-// -------------------------
-
 @main-sm-columns:       @grid-columns;
 @sidebar-sm-columns:    4;
 
 
 // Brand colors
-// -------------------------
+@packer-green:								#2a433a;
+@packer-yellow:								#ffc10d;
+@brand-primary:								@packer-green;
+// @body-bg: @gray;
 
-@brand-primary:         #27ae60;
+
+// Fonts
+@font-family-sans-serif:  "adelle-sans",sans-serif;
+@font-family-serif:       "adelle",serif;
+@font-size-base:          16px;
 
 
 // Glyphicons path
-// -------------------------
-
 @icon-font-path:        "../vendor/bootstrap/fonts/";
+
+
+// Navbar
+@navbar-default-bg:												@brand-primary;
+@navbar-default-brand-color:							@packer-yellow;
+@navbar-default-link-color:								@packer-yellow;
+@navbar-default-link-hover-color:         lighten(@navbar-default-link-color, 10%);
+@navbar-default-link-active-color:        darken(@navbar-default-link-color, 10%);
+@navbar-default-link-active-bg:           lighten(@navbar-default-bg, 6.5%);
+@navbar-default-link-disabled-color:      darken(@navbar-default-link-color, 50%);
+
+

@@ -1,1 +1,30 @@
 .banner { }
+
+// Navbar
+.navbar-default {
+	font-family: @font-family-serif; 
+}
+
+.navbar-nav {
+	float: right;
+}
+
+.navbar-default {
+
+  .navbar-brand {
+    &:hover,
+    &:focus {
+      color: lighten(@navbar-default-brand-color, 10%);
+    }
+  }	
+  .navbar-toggle {
+    border-color: @packer-yellow;
+    &:hover,
+    &:focus {
+      background-color: lighten(@navbar-default-bg, 5%);
+    }
+    .icon-bar {
+      background-color: @packer-yellow;
+    }
+  }
+ }
