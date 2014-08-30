@@ -23,6 +23,36 @@ var Roots = {
   common: {
     init: function() {
       // JavaScript to be fired on all pages
+
+
+      // Animate logo
+      $('.letter').velocity({ 
+          // properties
+          scale: 1.01,
+          opacity: 0.7,
+        }, {
+          // options
+          delay: 1000,
+          easing: "ease-in-out", // Default easing
+       });
+
+      $('.letter').velocity("reverse", { delay: 100, duration: 300 });
+
+      $('#dot').velocity({
+        scale: 1.005,
+        opacity: 0.9,        
+        // strokeRed: 0,
+        // strokeGreen: 0,
+        // strokeBlue: 0,
+      }, 
+      {
+        delay: 300
+      });
+
+      $('#dot').velocity("reverse", { delay: 100, duration: 500 });     
+      // End logo animate
+
+
     }
   },
   // Home page

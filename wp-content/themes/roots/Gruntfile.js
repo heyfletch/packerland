@@ -18,6 +18,7 @@ module.exports = function(grunt) {
     'assets/vendor/bootstrap/js/scrollspy.js',
     'assets/vendor/bootstrap/js/tab.js',
     'assets/vendor/bootstrap/js/affix.js',
+    'assets/vendor/velocity/velocity.js',
     'assets/js/plugins/*.js',
     'assets/js/_*.js'
   ];
@@ -43,8 +44,6 @@ module.exports = function(grunt) {
         },
         options: {
           compress: false,
-          // LESS source map
-          // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: true,
           sourceMapFilename: 'assets/css/main.css.map',
           sourceMapRootpath: '/wp-content/themes/roots/'
