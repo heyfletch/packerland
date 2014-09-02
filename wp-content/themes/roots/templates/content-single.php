@@ -1,6 +1,20 @@
 <?php while (have_posts()) : the_post(); ?>
   <article <?php post_class(); ?>>
     <header>
+
+  <a class="post-thumbnail" href="<?php the_permalink(); ?>">
+  <?php
+    // Output the featured image.
+    if ( has_post_thumbnail() ) :
+      if ( 'grid' == get_theme_mod( 'featured_content_layout' ) ) {
+        the_post_thumbnail();
+      } else {
+        the_post_thumbnail();
+      }
+    endif;
+  ?>
+  </a>
+
       <h1 class="entry-title"><?php the_title(); ?></h1>
       <?php get_template_part('templates/entry-meta'); ?>
     </header>
@@ -10,6 +24,6 @@
     <footer>
       <?php wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'roots'), 'after' => '</p></nav>')); ?>
     </footer>
-    <?php comments_template('/templates/comments.php'); ?>
+    <?php // comments_template('/templates/comments.php'); ?>
   </article>
 <?php endwhile; ?>
