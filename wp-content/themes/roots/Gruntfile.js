@@ -145,6 +145,7 @@ module.exports = function(grunt) {
           'assets/css/main.css',
           'assets/js/scripts.js',
           'templates/*.php',
+          'lib/*.php',
           '*.php'
         ]
       }
