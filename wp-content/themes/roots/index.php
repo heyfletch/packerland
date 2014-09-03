@@ -10,18 +10,19 @@
 
 
 
-<?php /*  WordPress Loop Here */ ?>
-
-
 <?php
+  // exclude sticky posts from the homepage post stream
   $the_query = new WP_Query( array( 'post__not_in' => get_option( 'sticky_posts' ) ) );
+
+  // WordPress Loop Here
   if ( $the_query->have_posts() ) : 
     while ( $the_query->have_posts() ) : $the_query->the_post();
-?>
 
-    <?php get_template_part('templates/content', get_post_format()); ?>
-    <?php endwhile; ?>
-  <?php endif; ?>
+      get_template_part('templates/content', get_post_format()); 
+
+    endwhile; 
+  endif; 
+?>
 
 
 

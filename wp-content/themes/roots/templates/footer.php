@@ -1,4 +1,4 @@
-<footer class="content-info" role="contentinfo">
+<footer class="navbar-default navbar-fixed-bottom content-info" role="contentinfo">
   <div class="container">
     <?php dynamic_sidebar('sidebar-footer'); ?>
   </div>

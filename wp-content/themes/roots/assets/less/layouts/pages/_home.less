@@ -11,6 +11,12 @@
 .featured {
 	margin: @line-height-computed 0;
 
+ 	a:hover {
+ 		h2 {
+ 			color: @packer-yellow;
+ 		}
+ 	}
+
 	h2 {
 		color: #fff;
 		text-shadow: 2px 2px 2px @packer-green;
@@ -20,6 +26,11 @@
 		margin-left: 3%;
 		margin-right: 3%;
 		width: 90%;
+
+		@media(@xs) { 
+	  	font-size: 24px;
+	  }
+
 	}
 }
 
