@@ -25,14 +25,18 @@
 
 			<?php
 				$loop = new WP_Query( array(
-				'showposts' => 4,
+				'showposts' => 5,
 				'post__in' => get_option('sticky_posts'),
 				'ignore_sticky_posts' => 1 ) );
 
-			while ( $loop->have_posts() ) : $loop->the_post(); ?>
+				while ( $loop->have_posts() ) : $loop->the_post(); ?>
+
+					<?php if ( $loop->current_post > 0) { ?>
 			
-			<h4><?php the_title(); ?></h4>
-			<?php endwhile; ?>
+						<h4><?php the_title(); ?></h4>
+					<?php } ?>
+
+				<?php endwhile; ?>
 
 		</aside>
 
