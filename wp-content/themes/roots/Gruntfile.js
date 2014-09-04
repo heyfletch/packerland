@@ -158,7 +158,7 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('dev', [
     'jshint',
-    'less:dev',
+    'less:build',
     'autoprefixer:dev',
     'concat'
   ]);
