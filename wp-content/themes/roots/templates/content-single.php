@@ -2,18 +2,16 @@
   <article <?php post_class(); ?>>
     <header>
 
-  <a class="post-thumbnail" href="<?php the_permalink(); ?>">
   <?php
     // Output the featured image.
     if ( has_post_thumbnail() ) :
       if ( 'grid' == get_theme_mod( 'featured_content_layout' ) ) {
-        the_post_thumbnail();
+        the_post_thumbnail('large', array('class' => 'img-responsive'));
       } else {
-        the_post_thumbnail();
+        the_post_thumbnail('large', array('class' => 'img-responsive'));
       }
     endif;
   ?>
-  </a>
 
       <h1 class="entry-title"><?php the_title(); ?></h1>
       <?php get_template_part('templates/entry-meta'); ?>
