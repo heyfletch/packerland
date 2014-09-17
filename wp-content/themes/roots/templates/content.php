@@ -15,11 +15,9 @@
 
 	    <h2 class="entry-title"><?php the_title(); ?></h2>
 
-      <?php // get_template_part('templates/entry-meta'); ?>
     </a>
 
-    <div class="image-credits"><a target="_blank" href="<?php echo $image_credit_url ?>">Image credit: <?php echo $image_credit_name ?></a> 
-    </div>
+    <?php include('image-credits.php'); ?>
 
   </header>
 
