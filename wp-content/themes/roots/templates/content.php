@@ -1,13 +1,26 @@
+<?php 
+  // get image id
+  $post_thumbnail_id = get_post_thumbnail_id( $post_id );
+
+  // get ACF custom fields for the image
+  $image_credit_name = get_field('image_credit_name', $post_thumbnail_id);
+  $image_credit_url = get_field('image_credit_url', $post_thumbnail_id);
+?>
+
 <article <?php post_class(); ?>>
 
   <header>
-		<a href="<?php the_permalink(); ?>">
-			<?php the_post_thumbnail('large', array('class' => 'img-responsive')); ?>
+    <a href="<?php the_permalink(); ?>">
+      <?php the_post_thumbnail('large', array('class' => 'img-responsive')); ?>
 
 	    <h2 class="entry-title"><?php the_title(); ?></h2>
 
-	    <?php // get_template_part('templates/entry-meta'); ?>
+      <?php // get_template_part('templates/entry-meta'); ?>
     </a>
+
+    <div class="image-credits"><a target="_blank" href="<?php echo $image_credit_url ?>">Image credit: <?php echo $image_credit_name ?></a> 
+    </div>
+
   </header>
 
   <div class="entry-summary">
