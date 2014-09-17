@@ -1,3 +1,24 @@
+//Set up border-box
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  box-sizing:         border-box;
+}
+
+// Keep the footer at the bottom
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  padding-bottom: @footer-height + 30px;
+  min-height: 100%;
+}
+// End keeping footer at bottom
+
 // Content wrapper
 .wrap { }
 
