@@ -16,7 +16,7 @@
 								'ignore_sticky_posts' => 1 ) );
 								while ( $loop->have_posts() ) : $loop->the_post(); 
 
-								the_post_thumbnail('large', array('class' => 'img-responsive'));
+								the_post_thumbnail('medium', array('class' => 'img-responsive'));
 
 								// get image id
 								$post_thumbnail_id = get_post_thumbnail_id( $post_id );

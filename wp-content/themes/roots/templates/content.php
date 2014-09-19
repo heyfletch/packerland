@@ -11,7 +11,7 @@
 
   <header>
     <a href="<?php the_permalink(); ?>">
-      <?php the_post_thumbnail('large', array('class' => 'img-responsive')); ?>
+      <?php the_post_thumbnail('medium', array('class' => 'img-responsive')); ?>
 
 	    <h2 class="entry-title"><?php the_title(); ?></h2>
 
