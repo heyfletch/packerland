@@ -20,9 +20,7 @@ function roots_scripts() {
    * Read the asset names from assets-manifest.json
    */
   if (WP_ENV === 'development') {
-    $get_assets = file_get_contents(get_template_directory() . '/assets/manifest.json');
-    $assets     = json_decode($get_assets, true);
-    $assets     = array(
+    $assets = array(
       'css'       => '/assets/css/main.css',
       'js'        => '/assets/js/scripts.js',
       'modernizr' => '/assets/vendor/modernizr/modernizr.js',
