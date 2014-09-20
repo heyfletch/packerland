@@ -25,6 +25,8 @@
 
     <?php the_excerpt(); ?>
 
+    <?php get_template_part('templates/entry-meta' ); ?>
+
   </div>
 
 </article>
