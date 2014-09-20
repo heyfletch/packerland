@@ -54,29 +54,31 @@ a:hover {
 // To Do: these styles are basically the same as the Featured post section
 // Find a way to do this with LESS / mixins or something
 
-.has-post-thumbnail {
-	header {
-		margin-bottom: 7px;
-		position: relative;
+.blog {
+	.has-post-thumbnail {
+		header {
+			margin-bottom: 7px;
+			position: relative;
 
-		h2 {
-			bottom: 1%;
-			line-height: 1.15;
-			margin-left: 3%;
-			margin-right: 3%;
-			position: absolute;
-			width: 90%;		
+			h2 {
+				bottom: 1%;
+				line-height: 1.15;
+				margin-left: 3%;
+				margin-right: 3%;
+				position: absolute;
+				width: 90%;
+			}
+
+			a {
+				color: @gray-lighter;
+				text-shadow: 2px 2px 6px @gray-darker;
+				letter-spacing: .06rem;		
+			}
 		}
 
-		a {
-			color: @gray-lighter;
-			text-shadow: 2px 2px 6px @gray-darker;
-			letter-spacing: .06rem;		
+		.entry-summary {
+			margin-bottom: 20px;
 		}
-	}
-
-	.entry-summary {
-		margin-bottom: 20px;
 	}
 }
 
