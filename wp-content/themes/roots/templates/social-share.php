@@ -1,7 +1,7 @@
 <!-- Buttons start here. Copy this ul to your document. -->
 <ul class="rrssb-buttons clearfix">
     <li class="facebook">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https://packer.land/" class="popup">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_the_permalink()) ?>" class="popup">
             <span class="icon">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
                     <path d="M27.825,4.783c0-2.427-2.182-4.608-4.608-4.608H4.783c-2.422,0-4.608,2.182-4.608,4.608v18.434
@@ -13,7 +13,7 @@
         </a>
     </li>
     <li class="twitter">
-        <a href="http://twitter.com/home?status=Packer.land%20rocks!%20https://packer.land/" class="popup">
+        <a href="http://twitter.com/home?status=<?php echo urlencode(get_the_title()) ?><?php echo urlencode(get_the_permalink()) ?>" class="popup">
             <span class="icon">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
@@ -30,7 +30,7 @@
     </li>
     <li class="googleplus">
         <!-- Replace href with your meta and URL information.  -->
-        <a href="https://plus.google.com/share?url=https://packer.land/" class="popup">
+        <a href="https://plus.google.com/share?url=<?php echo urlencode(get_the_permalink()) ?>" class="popup">
             <span class="icon">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
                     <g>
