@@ -39,9 +39,19 @@
 @footer-height:														100px;
 
 // media query helpers (http://www.thedotmack.com/2013/11/18/less-media-query-mixins/)
+// example usage:
+// .text {
+// 	font-size: 1.2vw;
+
+// 	@media(@md) { 
+//   	font-size: 16px;
+//   }
+// }
+
 @xs: ~'max-width: @{screen-xs}';
 @sm: ~'max-width: @{screen-sm-max}';
 @md: ~'max-width: @{screen-md-max}';
+@lg: ~'min-width: @{screen-lg-min}';
 
 
 

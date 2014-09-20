@@ -111,7 +111,7 @@ module.exports = function(grunt) {
       default: {
         options: {
           format: true,
-          length: 32,
+          length: 10,
           manifest: 'assets/manifest.json',
           querystring: {
             style: 'roots_css',
