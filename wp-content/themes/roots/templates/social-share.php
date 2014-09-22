@@ -51,7 +51,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="text">google+</span>
+            <span class="text">share</span>
         </a>
     </li>
 </ul>
