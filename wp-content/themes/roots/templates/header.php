@@ -1,13 +1,13 @@
 <header class="banner navbar navbar-default navbar-fixed-top" role="banner">
   <div class="container">
     <div class="navbar-header">
+      <a href="<?php echo esc_url(home_url()); ?>"><?php include 'logo.php';?></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="<?php echo esc_url(home_url()); ?>"><?php include 'logo.php';?></a>
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">

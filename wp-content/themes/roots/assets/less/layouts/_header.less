@@ -6,13 +6,13 @@
 }
 
 .navbar-default {
-
   .navbar-brand {
     &:hover,
     &:focus {
       color: lighten(@navbar-default-brand-color, 10%);
     }
   }	
+
   .navbar-toggle {
     border-color: @packer-yellow;
     &:hover,
@@ -22,8 +22,23 @@
     .icon-bar {
       background-color: @packer-yellow;
     }
+
+    @media(@sm) {
+      margin-right: 1px;
+    }
   }
- }
+
+  @media(@sm) {
+    padding-left: @navbar-padding-horizontal;
+    padding-right: @navbar-padding-horizontal;
+  }
+}
+
+.navbar-header {
+  .navbar-toggle {
+    margin-top: 16px;
+  }
+}
 
 .logo {
   margin: 0 auto;
