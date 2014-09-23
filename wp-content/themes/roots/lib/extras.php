@@ -27,8 +27,7 @@ function your_custom_menu_item ( $items, $args ) {
 
 	ob_start();
 	include get_template_directory() . '/templates/follow.php';
-	$follow_link_block = ob_get_contents();
-	ob_end_clean();
+	$follow_link_block = ob_get_clean();
 
   if ($args->theme_location == 'primary_navigation') {
       $items .= $follow_link_block;
@@ -36,13 +35,12 @@ function your_custom_menu_item ( $items, $args ) {
   return $items;
 }
 
-// custom function to return svg
+// Custom function to return svg
 function get_svg($my_svg) {
 
 	ob_start();
 	include get_template_directory() . '/assets/svg/' . $my_svg . '.svg';
-	$my_item = ob_get_contents();
-	ob_end_clean();
+	$my_item = ob_get_clean();
 
   echo $my_item;
 }
