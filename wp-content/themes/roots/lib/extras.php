@@ -54,7 +54,7 @@ function get_svg($svg, $echo = 1) {
 }
 
 // Custom function to echo a svg icon span and add a class with the svg filename. Optionally, specify a class.
-function svg_icon($svg, $css_class = '') {
+function svg_icon($svg, $label = '', $css_class = '') {
 
 	if ($css_class) {
 		$css_class = ' ' . $css_class;
@@ -62,5 +62,5 @@ function svg_icon($svg, $css_class = '') {
 		$css_class = ' ' . $svg;
 	}
 	
-	echo '<span class="icon' . $css_class . '">' . get_svg($svg, 0) . '</span>';
+	echo '<span class="icon' . $css_class . '">' . get_svg($svg, 0) . $label . '</span>';
 }
