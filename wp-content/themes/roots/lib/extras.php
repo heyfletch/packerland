@@ -25,20 +25,24 @@ add_filter('wp_title', 'roots_wp_title', 10);
 add_filter( 'wp_nav_menu_items', 'your_custom_menu_item', 10, 2 );
 function your_custom_menu_item ( $items, $args ) {
 
-$follow_link_block = <<<FOLLOW
-<li class="dropdown">
-  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Follow</span></a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="twitter"><a href="https://twitter.com/packer_land"><span class="glyphicon glyphicon-star"></span> Twitter</a></li>
-    <li class="facebook"><a href="https://www.facebook.com/packer.land.news"><span class="glyphicon glyphicon-star"></span> Facebook</a></li>
-    <li class="google"><a href="https://plus.google.com/+PackerLandNews"><span class="glyphicon glyphicon-star"></span> Google+</a></li>
-  </ul>
-</li>
-FOLLOW;
+	ob_start();
+	include get_template_directory() . '/templates/follow.php';
+	$follow_link_block = ob_get_contents();
+	ob_end_clean();
 
+  if ($args->theme_location == 'primary_navigation') {
+      $items .= $follow_link_block;
+  }
+  return $items;
+}
 
-    if ($args->theme_location == 'primary_navigation') {
-        $items .= $follow_link_block;
-    }
-    return $items;
+// custom function to return svg
+function get_svg($my_svg) {
+
+	ob_start();
+	include get_template_directory() . '/assets/svg/' . $my_svg . '.svg';
+	$my_item = ob_get_contents();
+	ob_end_clean();
+
+  echo $my_item;
 }
