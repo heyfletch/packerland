@@ -35,12 +35,32 @@ function your_custom_menu_item ( $items, $args ) {
   return $items;
 }
 
-// Custom function to return svg
-function get_svg($my_svg) {
+// Custom function to return svg by simply specifying the filename, assuming .svg extension
+function get_svg($svg, $echo = 1) {
 
 	ob_start();
-	include get_template_directory() . '/assets/svg/' . $my_svg . '.svg';
+	include get_template_directory() . '/assets/svg/' . $svg . '.svg';
 	$my_item = ob_get_clean();
 
-  echo $my_item;
+	if ($echo) {
+		// echo the html string by default
+	  echo $my_item;
+	} else {
+		// specify 0 to return for use in another function
+		// Example: get_svg($svg, 0)
+  	return $my_item;
+	}
+	
+}
+
+// Custom function to echo a svg icon span and add a class with the svg filename. Optionally, specify a class.
+function svg_icon($svg, $css_class = '') {
+
+	if ($css_class) {
+		$css_class = ' ' . $css_class;
+	} else {
+		$css_class = ' ' . $svg;
+	}
+	
+	echo '<span class="icon' . $css_class . '">' . get_svg($svg, 0) . '</span>';
 }

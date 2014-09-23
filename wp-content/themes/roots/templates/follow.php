@@ -4,8 +4,10 @@
 
     <li class="twitter"><a href="https://twitter.com/packer_land"><span class="glyphicon glyphicon-star"></span> Twitter</a></li>
 
-    <li class="facebook"><a href="https://www.facebook.com/packer.land.news">            
-      <span class="icon"><?php get_svg('facebook'); ?></span> Facebook</a>
+    <li class="facebook">
+    	<a href="https://www.facebook.com/packer.land.news">            
+      	<?php svg_icon('facebook'); ?> Facebook
+      </a>
     </li>
 
     <li class="google"><a href="https://plus.google.com/+PackerLandNews"><span class="glyphicon glyphicon-star"></span> Google+</a></li>
