@@ -4,6 +4,30 @@
 
 .nav {
 
+	.follow {
+
+		li {
+			border-radius: 5px;
+			background-color: @gray-lighter;
+			padding: 12px 10px 7px;
+			margin-bottom: 5px;
+
+			&:hover {
+				background-color: @navbar-default-link-active-bg;
+
+				.icon {
+					color: #fff;
+					fill: #fff;
+				}
+			}
+		}
+
+		.dropdown-menu {
+			box-shadow: none;
+			margin-top: 20px;
+		}
+	}
+
 	.icon {
 		vertical-align: top;
 
@@ -32,8 +56,8 @@
 
 
 //== Dropdowns
-@dropdown-bg:                    @packer-green;
-@dropdown-border:                darken(@packer-green, 2%);
+@dropdown-bg:                    transparent;
+@dropdown-border:                transparent;
 @dropdown-fallback-border:       #ccc;
 @dropdown-divider-bg:            lighten(@dropdown-bg, 10%);
 
@@ -41,11 +65,11 @@
 @dropdown-link-hover-color:      darken(@packer-yellow, 5%);
 @dropdown-link-hover-bg:         lighten(@dropdown-bg, 10%);
 
-@dropdown-link-active-color:     @component-active-color;
-@dropdown-link-active-bg:        @component-active-bg;
-@dropdown-link-disabled-color:   @gray-light;
+// @dropdown-link-active-color:     @component-active-color;
+// @dropdown-link-active-bg:        @component-active-bg;
+// @dropdown-link-disabled-color:   @gray-light;
 
-@dropdown-header-color:          @gray-light;
+// @dropdown-header-color:          @gray-light;
 
-//** Deprecated `@dropdown-caret-color` as of v3.1.0
-@dropdown-caret-color:           #000;
+// //** Deprecated `@dropdown-caret-color` as of v3.1.0
+// @dropdown-caret-color:           #000;

@@ -1,4 +1,4 @@
-<li class="dropdown">
+<li class="dropdown follow">
 
   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Follow</span></a>
 
