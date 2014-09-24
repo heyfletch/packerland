@@ -2,7 +2,7 @@
 
   <li class="facebook">
     <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_the_permalink()) ?>" class="popup">
-      <?php svg_icon('twitter'); ?>
+      <?php svg_icon('facebook'); ?>
       <span class="text">share</span>
     </a>
   </li>
@@ -20,5 +20,5 @@
       <span class="text">share</span>
     </a>
   </li>
-  
+
 </ul>

@@ -123,6 +123,19 @@ module.exports = function(grunt) {
         }
       }
     },
+    svgmin: {
+      options: {
+        plugins: [ { removeViewBox: false }, { removeUselessStrokeAndFill: false } ]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'assets/vendor/RRSSB/icons',
+          src: '{,*/}*.svg',
+          dest: 'assets/svg'
+        }]
+      }
+    },
     watch: {
       less: {
         files: [
@@ -161,6 +174,7 @@ module.exports = function(grunt) {
     'jshint',
     'less:dev',
     'autoprefixer:dev',
+    'svgmin',
     'concat'
   ]);
   grunt.registerTask('build', [
