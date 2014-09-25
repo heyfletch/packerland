@@ -5,7 +5,7 @@
 
 
 
-			<main class="main featured" role="featured">
+			<main class="col-md-7 featured" role="featured">
 				<a href="<?php the_permalink(); ?>">
 					<article>
 						<header>
@@ -43,7 +43,7 @@
 
 
 
-			<aside class="sidebar trending" role="trending">
+			<aside class="col-md-5 trending" role="trending">
 				<div class="h1">Trending: </div>
 				<h3>Packer News You Need to Know</h3>
 
