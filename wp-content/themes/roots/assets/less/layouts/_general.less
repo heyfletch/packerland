@@ -25,6 +25,10 @@ body {
 }
 // End keeping footer at bottom
 
+// override bootstrap/less/mixins/image.less hack for <ie11, which actually breaks in Chrome
+.img-responsive {
+  width: 100%;
+}
 // Content wrapper
 .wrap { }
 
