@@ -3,9 +3,16 @@
  * Clean up the_excerpt()
  */
 function roots_excerpt_more($more) {
-  return ' &hellip; <a href="' . get_permalink() . '">' . __('Continued', 'roots') . '</a>';
+  return ' <a href="' . get_permalink() . '">' . __('(Read More)', 'roots') . '</a>';
 }
 add_filter('excerpt_more', 'roots_excerpt_more');
+
+// Shorten excerpt length
+function new_excerpt_length($length) {
+    return 44;
+}
+add_filter('excerpt_length', 'new_excerpt_length');
+
 
 /**
  * Manage output of wp_title()
