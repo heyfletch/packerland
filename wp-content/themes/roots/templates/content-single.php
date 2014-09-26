@@ -41,6 +41,8 @@
       </script>      
     </div>
 
+    <div class="text-muted">Packer.land is new! Please leave a comment!</div>
+
     <?php comments_template('/templates/comments.php'); ?>
 
   </article>
