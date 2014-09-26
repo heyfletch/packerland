@@ -34,7 +34,11 @@
            style="display:block"
            data-ad-client="ca-pub-5674776962249237"
            data-ad-slot="2624700648"
-           data-ad-format="auto"></ins>
+           data-ad-format="auto">
+      </ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>      
     </div>
 
     <?php comments_template('/templates/comments.php'); ?>
