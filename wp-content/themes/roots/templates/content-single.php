@@ -1,17 +1,31 @@
+<?php 
+  // get image id
+  $post_thumbnail_id = get_post_thumbnail_id( $post_id );
+
+  // get ACF custom fields for the image
+  $image_credit_name = get_field('image_credit_name', $post_thumbnail_id);
+  $image_credit_url = get_field('image_credit_url', $post_thumbnail_id);
+?>
+
 <?php while (have_posts()) : the_post(); ?>
   <article <?php post_class(); ?>>
     <header>
 
-  <?php
-    // Output the featured image.
-    if ( has_post_thumbnail() ) :
-      if ( 'grid' == get_theme_mod( 'featured_content_layout' ) ) {
-        the_post_thumbnail('large', array('class' => 'img-responsive'));
-      } else {
-        the_post_thumbnail('large', array('class' => 'img-responsive'));
-      }
-    endif;
-  ?>
+
+      <div class="post-featured-image">
+        <?php
+          // Output the featured image.
+          if ( has_post_thumbnail() ) :
+            if ( 'grid' == get_theme_mod( 'featured_content_layout' ) ) {
+              the_post_thumbnail('large', array('class' => 'img-responsive'));
+            } else {
+              the_post_thumbnail('large', array('class' => 'img-responsive'));
+            }
+          endif;
+        ?>
+
+        <?php include('image-credits.php'); ?>
+      </div>
 
       <?php get_template_part( 'templates/social-share' ); ?>
 
