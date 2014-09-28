@@ -25,7 +25,9 @@
 
     <?php the_excerpt(); ?>
 
-    <?php get_template_part('templates/entry-meta' ); ?>
+    <div class="entry-meta hidden">
+      <?php get_template_part('templates/entry-meta' ); ?>
+    </div>
 
   </div>
 
