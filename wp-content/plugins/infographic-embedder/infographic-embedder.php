@@ -108,7 +108,10 @@ function add_infographic_embed($content) {
 			'infographic_embedder_embed_html',
 			'<p class="infographic-embedder-callout">Embed Our Infographic On Your Site!</p><label for="embed_width">Image Width</label>'
 		);
-		$content .= '<input id="embed_width" value="100" type="text" size="4" maxlength="4" /><select id="embed_unit"><option value="percentage">%</option><option value="px">px</option></select><textarea id="embedcode">' . $embedval . '</textarea><div id="embed_width_hidden_div" style="display: none"><textarea id="embed_width_hidden">' . $embedval . '</textarea></div>';
+		$content .= apply_filters( 
+			'infographic_embedder_embed_block', 
+			'<input id="embed_width" value="100" type="text" size="4" maxlength="4" /><select id="embed_unit"><option value="percentage">%</option><option value="px">px</option></select><textarea id="embedcode">' . $embedval . '</textarea><div id="embed_width_hidden_div" style="display: none"><textarea id="embed_width_hidden">' . $embedval . '</textarea></div>'
+		);
 		$content .= '</div>';
 	}
 

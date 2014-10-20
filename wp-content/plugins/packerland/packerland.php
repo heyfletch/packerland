@@ -26,12 +26,26 @@ add_filter ( 'infographic_embedder_download_html', 'infographics_custom_image_co
 
 // Edit the embed code text and code
 function infographics_custom_embed_code() {
-    return '<img src="' . get_post_meta( get_the_ID(), 'infographic_embedder_post_class', true ) . '" alt="' . get_the_title() . ' - An Infographic from ' . get_bloginfo('name') . '" width="100%" class="infographic_embedder" /><p class="infographic_attr">Check out <a href="' . get_permalink() . '" target="_blank">' . get_bloginfo('name') . '!</a></p>';
+    return '<img src="' . get_post_meta( get_the_ID(), 'infographic_embedder_post_class', true ) . '" alt="' . get_the_title() . ' - An Infographic from ' . get_bloginfo('name') . '" width="100%" class="packerland_infographic" /><p class="packerland_tagline"><a href="' . get_permalink() . '" target="_blank">A Packers Infographic by ' . get_bloginfo('name') . '</a></p>';
 }
 add_filter ( 'infographic_embedder_image_code', 'infographics_custom_embed_code' );
 
 // Edit the header label
 function infographics_custom_labeling() {
-    return '';
+    return '<button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#embedcode">
+  Grab Embed Code</button>';
 }
 add_filter ( 'infographic_embedder_embed_html', 'infographics_custom_labeling' );
+
+// Edit the embed code block
+function infographics_custom_embed_block() {
+   $embedval = htmlentities(
+      apply_filters(
+         'infographic_embedder_image_code',
+         '<img src="' . $infourl . '" alt="' . get_the_title() . ' - An Infographic from ' . get_bloginfo('name') . '" width="100%" class="infographic_embedder" /><p class="infographic_attr">Embedded from <a href="' . get_permalink() . '" target="_blank">' . get_bloginfo('name') . '</a></p>'
+      )
+   );
+
+    return '<pre id="embedcode" class="collapse">' . $embedval . '</pre><div id="embed_width_hidden_div" style="display: none"><textarea id="embed_width_hidden">' . $embedval . '</textarea></div>';
+}
+add_filter ( 'infographic_embedder_embed_block', 'infographics_custom_embed_block' );
