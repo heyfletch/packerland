@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Column displaying information about the author of a post, such as the
  * author's display name, user ID and email address.
@@ -12,91 +13,48 @@ class CPAC_Column_Post_Author_Name extends CPAC_Column {
 	 * @since 2.2.1
 	 */
 	public function init() {
-
 		parent::init();
 
-		// Properties
-		$this->properties['type']	 			= 'column-author_name';
-		$this->properties['label']	 			= __( 'Display Author As', 'cpac' );
-		$this->properties['is_cloneable']		= true;
-		$this->properties['object_property']	= 'post_author';
+		$this->properties['type'] = 'column-author_name';
+		$this->properties['label'] = __( 'Display Author As', 'codepress-admin-columns' );
+		$this->properties['is_cloneable'] = true;
+		$this->properties['object_property'] = 'post_author';
 
 		// Options
 		$this->options['display_author_as'] = '';
-	}
-
-	/**
-	 * Get author field by nametype
-	 *
-	 * Used by posts and sortable
-	 *
-	 * @since 2.0
-	 *
-	 * @return array Authortypes
-	 */
-	private function get_nametypes() {
-
-		$nametypes = array(
-			'display_name'		=> __( 'Display Name', 'cpac' ),
-			'first_name'		=> __( 'First Name', 'cpac' ),
-			'last_name'			=> __( 'Last Name', 'cpac' ),
-			'nickname'			=> __( 'Nickname', 'cpac' ),
-			'user_login'		=> __( 'User Login', 'cpac' ),
-			'user_email'		=> __( 'User Email', 'cpac' ),
-			'ID'				=> __( 'User ID', 'cpac' ),
-			'first_last_name'	=> __( 'First and Last Name', 'cpac' ),
-		);
-
-		return $nametypes;
-	}
-
-	/**
-	 * Get display name.
-	 *
-	 * Can also be used by addons.
-	 *
-	 * @since 2.0
-	 */
-	public function get_display_name( $user_id ) {
-
-		if ( ! $userdata = get_userdata( $user_id ) )
-			return false;
-
-		$name = '';
-
-		$display_as = $this->options->display_author_as;
-
-		if ( 'first_last_name' == $display_as ) {
-			$first 	= ! empty( $userdata->first_name ) ? $userdata->first_name : '';
-			$last 	= ! empty( $userdata->last_name ) ? " {$userdata->last_name}" : '';
-			$name 	= $first.$last;
-		}
-
-		elseif ( ! empty( $userdata->{$display_as} ) ) {
-			$name = $userdata->{$display_as};
-		}
-
-		// default to display_name
-		if ( ! $name ) {
-			$name = $userdata->display_name;
-		}
-
-		return $name;
+		$this->options['user_link_to'] = '';
 	}
 
 	/**
 	 * @see CPAC_Column::get_value()
 	 * @since 2.0
 	 */
-	function get_value( $post_id ) {
-
+	public function get_value( $post_id ) {
 		$value = '';
 
-		$nametypes = $this->get_nametypes();
-		if ( isset( $nametypes[ $this->options->display_author_as ] ) ) {
-			if( $author = $this->get_raw_value( $post_id ) ) {
-				$value = $this->get_display_name( $author );
-			}
+		if ( $user_id = $this->get_raw_value( $post_id ) ) {
+			$value = $this->get_display_name( $user_id );
+		}
+
+		switch ( $this->get_option( 'user_link_to' ) ) {
+			case 'edit_user':
+				$link = get_edit_user_link( $user_id );
+				break;
+			case 'view_user_posts':
+				$link = add_query_arg( array(
+					'post_type' => get_post_field( 'post_type', $post_id ),
+					'author'    => get_the_author_meta( 'ID' )
+				), 'edit.php' );
+				break;
+			case 'view_author':
+				$link = get_author_posts_url( $user_id );
+				break;
+			default:
+				$link = '';
+		}
+
+		if ( $link ) {
+			$value = '<a href="' . esc_url( $link ) . '">' . $value . '</a>';
 		}
 
 		return $value;
@@ -106,8 +64,7 @@ class CPAC_Column_Post_Author_Name extends CPAC_Column {
 	 * @see CPAC_Column::get_raw_value()
 	 * @since 2.0.3
 	 */
-	function get_raw_value( $post_id ) {
-
+	public function get_raw_value( $post_id ) {
 		return get_post_field( 'post_author', $post_id );
 	}
 
@@ -117,19 +74,28 @@ class CPAC_Column_Post_Author_Name extends CPAC_Column {
 	 * @see CPAC_Column::display_settings()
 	 * @since 2.0
 	 */
-	function display_settings() {
-		?>
-
-		<tr class="column-author-name">
-			<?php $this->label_view( $this->properties->label, __( 'This is the format of the author name.', 'cpac' ), 'display_author_as' ); ?>
-			<td class="input">
-				<select name="<?php $this->attr_name( 'display_author_as' ); ?>" id="<?php $this->attr_id( 'display_author_as' ); ?>">
-				<?php foreach ( $this->get_nametypes() as $key => $label ) : ?>
-					<option value="<?php echo $key; ?>"<?php selected( $key, $this->options->display_author_as ) ?>><?php echo $label; ?></option>
-				<?php endforeach; ?>
-				</select>
-			</td>
-		</tr>
-		<?php
+	public function display_settings() {
+		$this->display_field_user_format();
+		$this->display_field_user_link_to();
 	}
+
+	/**
+	 * Display settings field for the page the posts should link to
+	 *
+	 * @since 2.4.7
+	 */
+	public function display_field_user_link_to() {
+		$this->display_field_select(
+			'user_link_to',
+			__( 'Link To', 'codepress-admin-columns' ),
+			array(
+				''                => __( 'None' ),
+				'edit_user'       => __( 'Edit User Profile' ),
+				'view_user_posts' => __( 'View User Posts' ),
+				'view_author'     => __( 'View Public Author Page', 'codepress-admin-columns' )
+			),
+			__( 'Page the author name should link to.', 'codepress-admin-columns' )
+		);
+	}
+
 }

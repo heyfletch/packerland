@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CPAC_Column_Media_Dimensions
  *
@@ -6,32 +7,26 @@
  */
 class CPAC_Column_Media_Dimensions extends CPAC_Column {
 
-	/**
-	 * @see CPAC_Column::init()
-	 * @since 2.2.1
-	 */
 	public function init() {
-
 		parent::init();
 
-		// Properties
-		$this->properties['type']	 	= 'column-dimensions';
-		$this->properties['label']	 	= __( 'Dimensions', 'cpac' );
+		$this->properties['type'] = 'column-dimensions';
+		$this->properties['label'] = __( 'Dimensions', 'codepress-admin-columns' );
 	}
 
-	/**
-	 * @see CPAC_Column::get_value()
-	 * @since 2.0
-	 */
-	function get_value( $id ) {
+	public function get_value( $id ) {
+		$value = $this->get_empty_char();
 
-		$value = '';
+		$meta = $this->get_raw_value( $id );
 
-		$meta = get_post_meta( $id, '_wp_attachment_metadata', true );
-
-		if ( ! empty( $meta['width'] ) && ! empty( $meta['height'] ) )
+		if ( ! empty( $meta['width'] ) && ! empty( $meta['height'] ) ) {
 			$value = "{$meta['width']} x {$meta['height']}";
+		}
 
 		return $value;
+	}
+
+	public function get_raw_value( $id ) {
+		return get_post_meta( $id, '_wp_attachment_metadata', true );
 	}
 }

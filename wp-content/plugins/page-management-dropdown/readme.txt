@@ -3,8 +3,8 @@ Contributors: jaschaephraim
 Donate link: http://jaschaephraim.com/wordpress/
 Tags: admin, administration, page, pages, menu, cms
 Requires at least: 3.0
-Tested up to: 3.x
-Stable tag: 2.6
+Tested up to: 4.1
+Stable tag: 2.7
 
 Adds a link to edit each individual page to the Pages admin menu.
 

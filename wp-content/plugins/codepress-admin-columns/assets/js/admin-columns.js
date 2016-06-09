@@ -1,43 +1,42 @@
 jQuery( document ).ready( function( $ ) {
 	cpac_tooltips();
-
-	if ( typeof CPAC.storage_model !== 'undefined' && CPAC.storage_model.is_table_header_fixed ) {
-		cpac_floatingheader();
-	}
+	cpac_quickedit_events();
 } );
 
 /**
  * @since 2.2.4
  */
 function cpac_tooltips() {
+
+	if ( typeof jQuery.fn.qtip === 'undefined' ) {
+		return;
+	}
+
 	jQuery( '.cpac-tip' ).qtip( {
-		content: {
-			attr: 'data-tip'
+		content : {
+			attr : 'data-tip'
 		},
-		position: {
-			my: 'top center',
-			at: 'bottom center'
+		position : {
+			my : 'top center',
+			at : 'bottom center'
 		},
-		style: {
-			tip: true,
-			classes: 'qtip-tipsy'
+		style : {
+			tip : true,
+			classes : 'qtip-tipsy'
 		}
 	} );
 }
 
-/**
- * @since 2.2.4
- */
-function cpac_floatingheader() {
-	var table = jQuery( 'table.wp-list-table.widefat' );
-	var topscroll = 0;
+function cpac_quickedit_events() {
+	var $ = jQuery;
 
-	if ( jQuery( '#wpadminbar' ) ) {
-		topscroll = 32;
-	}
+	$( document ).ajaxComplete( function( event, request, settings ) {
+		var $result = $( '<div>' ).append( request.responseText );
+		if ( $result.find( 'tr.iedit' ).length == 1 ) {
+			var id = $result.find( 'tr.iedit' ).attr( 'id' );
+			$( 'tr#' + id ).trigger( 'updated' );
+		}
+		;
 
-	table.floatThead( {
-		scrollingTop: topscroll
 	} );
-
 }

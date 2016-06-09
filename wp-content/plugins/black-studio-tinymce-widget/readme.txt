@@ -1,10 +1,10 @@
 === Black Studio TinyMCE Widget ===
-Contributors: marcochiesi, thedarkmist
+Contributors: black-studio, marcochiesi, thedarkmist
 Donate link: http://www.blackstudio.it/en/wordpress-plugins/black-studio-tinymce-widget/
 Tags: wysiwyg, widget, tinymce, editor, image, media, rich text, rich text editor, visual editor, wysiwyg editor, tinymce editor, widget editor, html editor, wysiwyg widget, html widget, editor widget, text widget, rich text widget, enhanced text widget, tinymce widget, visual widget, image widget, media widget
 Requires at least: 3.1
-Tested up to: 4.1
-Stable tag: 2.1.4
+Tested up to: 4.5
+Stable tag: 2.2.10
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -29,10 +29,11 @@ This plugin adds a new `Visual Editor` widget type that allows you to insert ric
 
 = Links =
 
-* [Plugin's web page](http://www.blackstudio.it/en/wordpress-plugins/black-studio-tinymce-widget/)
+* [Author's web site](http://www.blackstudio.it/en/)
+* [Plugin's page](http://www.blackstudio.it/en/wordpress-plugins/black-studio-tinymce-widget/)
 * [FAQ](https://wordpress.org/plugins/black-studio-tinymce-widget/faq/)
 * [Support forum](https://wordpress.org/support/plugin/black-studio-tinymce-widget)
-* [Follow us on Twitter](https://twitter.com/blackstudioita)
+* Follow us on [Twitter](https://twitter.com/blackstudioita), [Facebook](https://www.facebook.com/blackstudiocomunicazione) and [LinkedIn](https://www.linkedin.com/company/black-studio)
 
 = Get involved =
 
@@ -66,17 +67,18 @@ If you are experiencing issues with the plugin please read entirely these FAQ be
 2. Ensure that you are running the latest versions of both WordPress and the plugin.
 3. Search in our [support forum](http://wordpress.org/support/plugin/black-studio-tinymce-widget) for threads with similar issues.
 4. Disable all other plugins and check if the problem is fixed. In that case enable the other plugins one by one and figure out which one is causing the issue. Please see [Conflict Diagnosis Guide for WordPress plugins](https://rtcamp.com/rtmedia/docs/troubleshooting/conflict-diagnosis-guide-wordpress-plugins/) for further info.
-5. If the problem persists even with all other plugins disabled, try to switch to a WordPress default theme (i.e. Twenty Fourteen) and check if that fixes the issue.
+5. If the problem persists even with all other plugins disabled, try to switch to a WordPress default theme (i.e. Twenty Fifteen) and check if that fixes the issue.
 
 If you found a conflict with a plugin or theme, or if your problem is still present after the steps above, open a topic in the [support forum](http://wordpress.org/support/plugin/black-studio-tinymce-widget) and provide the following information:
 
 * Detailed description of the problem, including the steps to reproduce it
+* Location(s) where the problem occurs (Appearance -> Widgets, Theme Customizer, Accessibility mode, Page Builder, etc)
 * Error messages, if any, in particular in [browser's javascript console](http://webmasters.stackexchange.com/questions/8525/how-to-open-the-javascript-console-in-different-browsers)
 * Browser and Operating System in use
 * Plugin version in use
 * WordPress version in use
 * WordPress theme in use
-* WordPress default language in use, if other than english
+* WordPress language in use, if other than english
 * WordPress plugins causing conflicts, if any
 * A link to a screenshot, if it can be useful to understand the problem
 * A link to your website, if it can be useful to show the problem
@@ -108,22 +110,22 @@ The appearance of widgets in the frontend depends on both CSS and HTML. This plu
 As for the HTML, most of the markup is controlled by WordPress and by the theme.
 The HTML output of a widget includes the following parts:
 `
-[before_widget]
-	[before_title]
-		[title]
-	[after_title]
-	[before_text]
-		[text]
-	[after_text]
-[after_widget]
+{before_widget}
+	{before_title}
+		{title}
+	{after_title}
+	{before_text}
+		{text}
+	{after_text}
+{after_widget}
 `
 which can be customized as following:
 
-* The `[title]` and `[text]` are the values that you insert in Widgets administration panel.
-* The markup  of `[before_widget]`, `[after_widget]`, `[before_title]`, `[after_title]` is usually defined by your theme when registering a sidebar with the [`register_sidebar`](http://codex.wordpress.org/Function_Reference/register_sidebar) function. 
-* The `[before_text]` and `[after_text]` are the only piece of HTML markup added by the plugin. The default markup is the same as native WordPress text widgets to ensure visual compatibility with styles created for text widgets: `<div class="textwidget"> [text] </div>`. You may customize the markup using the `black_studio_tinymce_before_text` and `black_studio_tinymce_after_text` filter hooks. They both take two parameters, the first is the default text and the second is the widget instance. See examples below.
+* The `{title}` and `{text}` are the values that you insert in Widgets administration panel.
+* The markup  of `{before_widget}`, `{after_widget}`, `{before_title}`, `{after_title}` is usually defined by your theme when registering a sidebar with the [`register_sidebar`](http://codex.wordpress.org/Function_Reference/register_sidebar) function. 
+* The `{before_text}` and `{after_text}` are the only piece of HTML markup added by the plugin. The default markup is the same as native WordPress text widgets to ensure visual compatibility with styles created for text widgets: `<div class="textwidget"> {text} </div>`. You may customize the markup using the `black_studio_tinymce_before_text` and `black_studio_tinymce_after_text` filter hooks. They both take two parameters, the first is the default text and the second is the widget instance. See examples below.
 
-Example 1: Custom markup for `[before_text]` and `[after_text]`
+Example 1: Custom markup for `{before_text}` and `{after_text}`
 `
 add_filter( 'black_studio_tinymce_before_text', 'my_widget_before_text', 10, 2 );
 function my_widget_before_text( $before_text, $instance ) {
@@ -139,6 +141,11 @@ Example 2: Totally remove markup for `[before_text]` and `[after_text]`
 `
 add_filter( 'black_studio_tinymce_before_text', '__return_empty_string' );
 add_filter( 'black_studio_tinymce_after_text', '__return_empty_string' );
+`
+
+There's also an additional hook, that you may use to specify to not display widgets if their content is empty:
+`
+add_filter( 'black_studio_tinymce_hide_empty', '__return_true' );
 `
 
 = How to customize widget contents (using hooks) =
@@ -172,6 +179,65 @@ function remove_bstw_widget_text_filters() {
 Plugin's data is stored in serialized format inside a record in the `wp_options` table having `option_name` = `'widget_black-studio-tinymce'`. Data storage is handled by WordPress and not directly by the plugin itslef. The widgets data is intentionally kept in the datatbase upon plugin deactivation / deletion to avoid content loss. If you want to totally remove the plugin including its data, just remove that record after plugin removal.
 
 == Changelog ==
+
+= 2.2.10 (2016-06-08) =
+* Fixed menubar transparency issue with Page Builder + TinyMCE Advanced
+
+= 2.2.9 (2016-04-22) =
+* Fixed compatibility issue with Page Builder + WPML String Translation
+* Fixed minor z-index issue with new inline link dialog (WordPress 4.5)
+
+= 2.2.8 (2015-09-16) =
+* Fixed link dialog z-index issue in Customizer
+
+= 2.2.7 (2015-09-03) =
+* Fixed issue with Customizer when clicking on the widget title arrow (courtesy of Syhlver)
+
+= 2.2.6 (2015-08-25) =
+* Fixed content duplication issue with Page Builder + WPML String Translation
+
+= 2.2.5 (2015-07-11) =
+* Fixed z-index issue on Styles dropdown in Customizer
+* Added workaround to avoid glitches in Customizer
+* Fixed extra slashes in inclusions using plugin_dir_path
+* Added Persian translation (courtesy of WP-Translation.org team on Transifex)
+
+= 2.2.4 (2015-05-14) =
+* Fixed issue with WordPress Theme Customizer
+* For developers: added ability to create subclasses of WP_Widget_Black_Studio_TinyMCE class (courtesy of [@andreamk](https://github.com/andreamk))
+* Added Khmer and updated Spanish translations (courtesy of WP-Translation.org team on Transifex)
+
+= 2.2.3 (2015-02-17) =
+* Fixed bug on reordering gallery images
+* Added Czech and Lithuanian translations (courtesy of WP-Translation.org team on Transifex)
+
+= 2.2.2 (2014-12-24) =
+* Fixed bug on visual/text mode not being saved in WordPress 4.1
+* Updated German and French translations (courtesy of WP-Translation.org team on Transifex)
+* Added support for [Composer](https://getcomposer.org) dependency manager (courtesy of [@cfoellmann](https://github.com/cfoellmann))
+
+= 2.2.1 (2014-11-18) =
+* Fixed paragraph formatting bug on saving
+* Fixed real-time update bug in Theme Customizer
+* Enhanced editor initialization
+* Simplified internal integration with Page Builder
+* Simplified internal initialization for accessibility mode
+* Minor changes for coding standard compliance
+
+= 2.2.0 (2014-11-18) =
+* Added filter to hide empty widgets
+* Added workaround for WordPress Core bug #28403
+* Enhanced compatibility for widgets created with 1.x plugin versions
+* Enhanced compatibility for editor instances used by other plugins
+* Fixed bug on line breaks being stripped in text mode
+* Updated translations (courtesy of WP-Translation.org team on Transifex)
+
+= 2.1.6 (2014-10-23) =
+* Fixed bug on line breaks being changed on editor load
+* Improved TinyMCE editor stuff loading
+
+= 2.1.5 (2014-10-21) =
+* Fixed bug when saving in text mode
 
 = 2.1.4 (2014-10-19) =
 * Fixed compatibility issue on TinyMCE initialization filtering
@@ -376,5 +442,5 @@ Plugin's data is stored in serialized format inside a record in the `wp_options`
 
 == Upgrade Notice ==
 
-= 2.1.4 =
+= 2.2.10 =
 Version 2.x is a major update. If you are upgrading from version 1.x please ensure to backup your database before upgrading.

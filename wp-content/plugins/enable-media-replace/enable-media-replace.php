@@ -3,15 +3,13 @@
 Plugin Name: Enable Media Replace
 Plugin URI: http://www.mansjonasson.se/enable-media-replace
 Description: Enable replacing media files by uploading a new file in the "Edit Media" section of the WordPress Media Library.
-Version: 3.0.1
+Version: 3.0.4
 Author: Måns Jonasson
 Author URI: http://www.mansjonasson.se
 
 Dual licensed under the MIT and GPL licenses:
 http://www.opensource.org/licenses/mit-license.php
 http://www.gnu.org/licenses/gpl.html
-
-Developed for .SE (Stiftelsen för Internetinfrastruktur) - http://www.iis.se
 */
 
 /**
@@ -55,29 +53,16 @@ function enable_media_replace_init() {
  */
 function enable_media_replace( $form_fields, $post ) {
 
-	// Check if we are on media upload screen for insertion of replace link
-	$on_media_edit_screen = false;
-	$current_wp_version = get_bloginfo('version');
-	if ($current_wp_version < 3.5) {
-		if (isset($_GET["attachment_id"]) && $_GET["attachment_id"]) { $on_media_edit_screen = true; } 
-	}
-	else {
-		$current_screen = get_current_screen();
-		if ( !is_null($current_screen) && $current_screen->base == 'post' && $current_screen->post_type == 'attachment' ) { $on_media_edit_screen = true; }
-	}
-	
-	if ($on_media_edit_screen == true) {
+	$url = admin_url( "upload.php?page=enable-media-replace/enable-media-replace.php&action=media_replace&attachment_id=" . $post->ID);
+	$action = "media_replace";
+  	$editurl = wp_nonce_url( $url, $action );
 
-		$url = admin_url( "upload.php?page=enable-media-replace/enable-media-replace.php&action=media_replace&attachment_id=" . $post->ID);
-		$action = "media_replace";
-      	$editurl = wp_nonce_url( $url, $action );
-
-		if (FORCE_SSL_ADMIN) {
-			$editurl = str_replace("http:", "https:", $editurl);
-		}
-		$link = "href=\"$editurl\"";
-		$form_fields["enable-media-replace"] = array("label" => __("Replace media", "enable-media-replace"), "input" => "html", "html" => "<p><a class='button-secondary'$link>" . __("Upload a new file", "enable-media-replace") . "</a></p>", "helps" => __("To replace the current file, click the link and upload a replacement.", "enable-media-replace"));
+	if (FORCE_SSL_ADMIN) {
+		$editurl = str_replace("http:", "https:", $editurl);
 	}
+	$link = "href=\"$editurl\"";
+	$form_fields["enable-media-replace"] = array("label" => __("Replace media", "enable-media-replace"), "input" => "html", "html" => "<p><a class='button-secondary'$link>" . __("Upload a new file", "enable-media-replace") . "</a></p>", "helps" => __("To replace the current file, click the link and upload a replacement.", "enable-media-replace"));
+
 	return $form_fields;
 }
 
@@ -138,16 +123,21 @@ function emr_get_modified_date($atts) {
 	if ($id == '') return false;
 
     // Get path to file
-	$current_file = get_attached_file($id, true);
+	$current_file = get_attached_file($id);
+
+	if ( ! file_exists( $current_file ) ) {
+		return false;
+	}
 
 	// Get file modification time
 	$filetime = filemtime($current_file);
 
-	// do date conversion
-	$content = date($format, $filetime);
+	if ( false !== $filetime ) {
+		// do date conversion
+		return date( $format, $filetime );
+	}
 	
-	return $content;
-
+	return false;
 }
 
 // Add Last replaced by EMR plugin in the media edit screen metabox - Thanks Jonas Lundman (http://wordpress.org/support/topic/add-filter-hook-suggestion-to)
@@ -156,9 +146,14 @@ function ua_admin_date_replaced_media_on_edit_media_screen() {
 	global $post;
 	$id = $post->ID;
 	$shortcode = "[file_modified id=$id]";
+
+	$file_modified_time = do_shortcode($shortcode);
+	if ( ! $file_modified_time ) {
+		return;
+	}
 	?>
 	<div class="misc-pub-section curtime">
-		<span id="timestamp"><?php _e( 'Revised', 'enable-media-replace' ); ?>: <b><?php echo do_shortcode($shortcode); ?></b></span>
+		<span id="timestamp"><?php _e( 'Revised', 'enable-media-replace' ); ?>: <b><?php echo $file_modified_time; ?></b></span>
 	</div>
 	<?php
 }

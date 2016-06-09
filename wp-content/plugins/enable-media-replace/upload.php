@@ -1,6 +1,6 @@
 <?php
 if (!current_user_can('upload_files'))
-	wp_die(__('You do not have permission to upload files.'));
+	wp_die(__('You do not have permission to upload files.', 'enable-media-replace'));
 
 // Define DB table names
 global $wpdb;
@@ -67,7 +67,7 @@ list($current_filename, $current_filetype) = $wpdb->get_row($sql, ARRAY_N);
 $current_guid = $current_filename;
 $current_filename = substr($current_filename, (strrpos($current_filename, "/") + 1));
 
-$current_file = get_attached_file((int) $_POST["ID"], true);
+$current_file = get_attached_file((int) $_POST["ID"], apply_filters( 'emr_unfiltered_get_attached_file', true ));
 $current_path = substr($current_file, 0, (strrpos($current_file, "/")));
 $current_file = str_replace("//", "/", $current_file);
 $current_filename = basename($current_file);
@@ -81,7 +81,7 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 	$filedata = wp_check_filetype_and_ext($_FILES["userfile"]["tmp_name"], $_FILES["userfile"]["name"]);
 	
 	if ($filedata["ext"] == "") {
-		echo __("File type does not meet security guidelines. Try another.");
+		echo __("File type does not meet security guidelines. Try another.", 'enable-media-replace');
 		exit;
 	}
 	
@@ -102,7 +102,7 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 		move_uploaded_file($_FILES["userfile"]["tmp_name"], $current_file);
 
 		// Chmod new file to original file permissions
-		chmod($current_file, $original_file_perms);
+		@chmod($current_file, $original_file_perms);
 
 		// Make thumb and/or update metadata
 		wp_update_attachment_metadata( (int) $_POST["ID"], wp_generate_attachment_metadata( (int) $_POST["ID"], $current_file ) );
@@ -122,7 +122,7 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 		move_uploaded_file($_FILES["userfile"]["tmp_name"], $new_file);
 
 		// Chmod new file to original file permissions
-		chmod($current_file, $original_file_perms);
+		@chmod($current_file, $original_file_perms);
 
 		$new_filetitle = preg_replace('/\.[^.]+$/', '', basename($new_file));
 		$new_filetitle = apply_filters( 'enable_media_replace_title', $new_filetitle ); // Thanks Jonas Lundman (http://wordpress.org/support/topic/add-filter-hook-suggestion-to)
@@ -201,4 +201,4 @@ if (FORCE_SSL_ADMIN) {
 
 //save redirection
 wp_redirect($returnurl);
-?>	
+?>

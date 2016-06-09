@@ -16,17 +16,16 @@ class CPAC_Column_Comment_Author_Avatar extends CPAC_Column {
 
 		// Properties
 		$this->properties['type']	 = 'column-author_avatar';
-		$this->properties['label']	 = __( 'Avatar', 'cpac' );
+		$this->properties['label']	 = __( 'Avatar', 'codepress-admin-columns' );
 	}
 
 	/**
 	 * @see CPAC_Column::get_value()
 	 * @since 2.0
 	 */
-	function get_value( $id ) {
+	public function get_value( $id ) {
 
 		$comment = get_comment( $id );
-
 		return get_avatar( $comment, 80 );
 	}
 }

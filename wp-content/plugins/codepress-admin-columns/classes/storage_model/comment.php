@@ -1,88 +1,80 @@
 <?php
 
+/**
+ * @since 2.0
+ */
 class CPAC_Storage_Model_Comment extends CPAC_Storage_Model {
 
-	/**
-	 * Constructor
-	 *
-	 * @since 2.0
-	 */
-	function __construct() {
+	public function __construct() {
 
-		$this->key 		 = 'wp-comments';
-		$this->label 	 = __( 'Comments' );
-		$this->type 	 = 'comment';
+		$this->key = 'wp-comments';
+		$this->label = __( 'Comments' );
+		$this->singular_label = __( 'Comment' );
+		$this->type = 'comment';
 		$this->meta_type = 'comment';
-		$this->page 	 = 'edit-comments';
-		$this->menu_type = 'other';
-
-		// headings
-		add_filter( "manage_{$this->page}_columns",  array( $this, 'add_headings' ), 100 );
-
-		// values
-		add_action( 'manage_comments_custom_column', array( $this, 'manage_value' ), 100, 2 );
+		$this->page = 'edit-comments';
 
 		parent::__construct();
 	}
 
 	/**
-	 * Get WP default supported admin columns per post type.
-	 *
-	 * @see CPAC_Type::get_default_columns()
-	 * @since 1.0
-	 *
-	 * @return array
+	 * @since 2.4.9
 	 */
-	public function get_default_columns() {
+	public function init_manage_columns() {
 
-		if ( ! function_exists('_get_list_table') ) return array();
+		add_filter( "manage_{$this->page}_columns", array( $this, 'add_headings' ), 100 );
+		add_action( 'manage_comments_custom_column', array( $this, 'manage_value' ), 100, 2 );
+	}
+
+	public function get_default_column_names() {
+		return array( 'cb', 'author', 'comment', 'response', 'date' );
+	}
+
+	protected function get_default_column_widths() {
+		return array(
+			'author'   => array( 'width' => 20 ),
+			'response' => array( 'width' => 15 ),
+			'date'     => array( 'width' => 14 ),
+		);
+	}
+
+	public function get_default_columns() {
+		if ( ! function_exists( '_get_list_table' ) ) {
+			return array();
+		}
 
 		// You can use this filter to add thirdparty columns by hooking into this.
 		// See classes/third_party.php for an example.
 		do_action( "cac/columns/default/storage_key={$this->key}" );
 
 		// get columns
-		$table 		= _get_list_table( 'WP_Comments_List_Table', array( 'screen' => 'comments' ) );
-		$columns 	= (array) $table->get_columns();
+		$table = _get_list_table( 'WP_Comments_List_Table', array( 'screen' => 'comments' ) );
+
+		// Since 4.4 the `floated_admin_avatar` filter is added in the constructor of the `WP_Comments_List_Table` class.
+		// Here we remove the filter from the constructor.
+		remove_filter( 'comment_author', array( $table, 'floated_admin_avatar' ), 10, 2 );
+
+		$columns = (array) $table->get_columns();
 
 		return $columns;
 	}
 
-	/**
-     * Get Meta
-     *
-	 * @since 2.0
-	 *
-	 * @return array
-     */
-    public function get_meta() {
-        global $wpdb;
+	public function get_meta() {
+		global $wpdb;
 
 		return $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$wpdb->commentmeta} ORDER BY 1", ARRAY_N );
-    }
+	}
 
-	/**
-	 * Manage value
-	 *
-	 * @since 2.0
-	 *
-	 * @param string $column_name
-	 * @param int $post_id
-	 */
 	public function manage_value( $column_name, $comment_id ) {
-
-		$value = '';
-
-		// get column instance
-		if ( $column = $this->get_column_by_name( $column_name ) ) {
-			$value = $column->get_value( $comment_id );
+		if ( ! ( $column = $this->get_column_by_name( $column_name ) ) ) {
+			return false;
 		}
+		$value = $column->get_display_value( $comment_id );
 
-		// filters
+		// hook
 		$value = apply_filters( "cac/column/value", $value, $comment_id, $column, $this->key );
 		$value = apply_filters( "cac/column/value/{$this->type}", $value, $comment_id, $column, $this->key );
 
 		echo $value;
 	}
-
 }

@@ -16,18 +16,29 @@ class CPAC_Column_Media_File_Name extends CPAC_Column {
 
 		// Properties
 		$this->properties['type']	 	= 'column-file_name';
-		$this->properties['label']	 	= __( 'File name', 'cpac' );
+		$this->properties['label']	 	= __( 'File name', 'codepress-admin-columns' );
 	}
 
 	/**
 	 * @see CPAC_Column::get_value()
 	 * @since 2.0
 	 */
-	function get_value( $id ) {
+	public function get_value( $id ) {
 
-		$file 		= wp_get_attachment_url( $id );
-		$filename 	= basename( $file );
+		$file = wp_get_attachment_url( $id );
+		$filename = $this->get_raw_value( $id );
 
 		return "<a title='{$filename}' href='{$file}'>{$filename}</a>";
+	}
+
+	/**
+	 * @see CPAC_Column::get_value()
+	 * @since 2.0
+	 */
+	public function get_raw_value( $id ) {
+
+		$file = wp_get_attachment_url( $id );
+
+		return basename( $file );
 	}
 }
